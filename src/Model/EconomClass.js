@@ -2,7 +2,7 @@
 
 /* global console */
 
-import {FlightData} from '../Model/FlightData.js';
+import {FlightData} from './FlightData.js';
 
 class EconomClass extends FlightData{
     constructor(costs) {
