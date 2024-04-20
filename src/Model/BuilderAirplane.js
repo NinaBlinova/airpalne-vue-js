@@ -1,6 +1,6 @@
 // Класс строителя самолета
 "use strict";
-import {Airplane} from '../Model/Airplane.js';
+import {Airplane} from './Airplane.js';
 
 class BuilderAirplane {
 
