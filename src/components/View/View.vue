@@ -5,31 +5,32 @@
       <div class="wrapper">
         <div>
           <div>
-            <input type="radio" id="business" name="airplane" value="business" v-model="placesType.selectedAirplane"/>
+            <input type="radio" id="business" name="airplane" value="business" checked/>
             <label for="business">Business</label>
           </div>
 
           <div>
-            <input type="radio" id="comfort" name="airplane" value="comfort" v-model="placesType.selectedAirplane"/>
+            <input type="radio" id="comfort" name="airplane" value="comfort"/>
             <label for="comfort">Comfort</label>
           </div>
 
           <div>
-            <input type="radio" id="econom" name="airplane" value="econom" v-model="placesType.selectedAirplane"/>
+            <input type="radio" id="econom" name="airplane" value="econom"/>
             <label for="econom">Econom</label>
           </div>
 
           <div>
             <label for="amount">Amount to pay: </label>
-            <input type="text" id="amount" name="amount" required minlength="1" size="7" v-model="placesType.amount"/>
+            <input type="text" id="amount" name="amount" required minlength="1" size="7"/>
           </div>
-
           <div>
-            <label for="buy">You can buy: </label>
-            <output name="buy" id="buy">{{ placesType.buy }}</output>
+            <form>
+              <label for="buy">You can buy: </label>
+              <output name="buy" id="buy" for="amount"></output>
+            </form>
           </div>
 
-          <button class="styled" @click="placesType.calculatePayment()"> Result</button>
+          <div><input class="styled" type="button" value="Result"/></div>
 
         </div>
         <div>
@@ -74,45 +75,18 @@
           </div>
 
         </div>
+
+
       </div>
     </fieldset>
+    <!--<script type="module" async src="../Presenter/Presenter.js"></script>-->
   </div>
 </template>
 
-<script setup>
-import {BusinessClass} from "@/Model/BusinessClass.js";
-import {ComfortClass} from "@/Model/ComfortClass.js";
-import {EconomClass} from "@/Model/EconomClass.js";
-import {reactive, computed} from "vue";
-
-const business = new BusinessClass(1000);
-const comfort = new ComfortClass(800);
-const econom = new EconomClass(300);
-
-
-const placesType = reactive({
-
-  placesType: {
-    selectedAirplane: 'business',
-    amount: 1200,
-    buy: ''
-  }
-})
-
-placesType.calculatePayment = function() {
-  if (this.selectedAirplane === 'business') {
-    business.setNext(comfort);
-    comfort.setNext(econom);
-    this.buy = business.youCanPay(this.amount);
-  } else if (this.selectedAirplane === 'comfort') {
-    comfort.setNext(econom);
-    this.buy = comfort.youCanPay(this.amount);
-  } else {
-    comfort.setNext(econom);
-    this.buy = econom.youCanPay(this.amount);
-  }
-};
-
+<script>
+export default {
+  name: "View"
+}
 </script>
 
 <style scoped>
@@ -127,8 +101,8 @@ input {
 }
 
 fieldset {
-  width: 730px;
-  height: 280px;
+  width: 700px;
+  height: 250px;
 }
 
 .block {
