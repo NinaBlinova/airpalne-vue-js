@@ -53,10 +53,6 @@
             <label for="floors">Floors: </label>
             <input type="text" id="floors" name="floors" v-model="airpalne.floors" required minlength="1" size="5"/>
           </div>
-          <div>
-            <label for="places">Places: </label>
-            <input type="text" id="places" name="places" v-model="airpalne.places" required minlength="1" size="5"/>
-          </div>
 
         </div>
 
@@ -107,7 +103,6 @@ const airpalne = reactive({
     windows: 0,
     doors: 0,
     floors: 0,
-    places: 0,
     selectedAirplane: 'business',
     destanation: ''
   }
@@ -159,8 +154,8 @@ input {
 }
 
 fieldset {
-  width: 1000px;
-  height: 500px;
+  width: 800px;
+  height: 250px;
 }
 
 .wrapper {
