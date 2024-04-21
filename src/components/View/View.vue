@@ -35,27 +35,27 @@
         <div>
           <div>
             <label for="model">Model of airplane: </label>
-            <input type="text" id="model" name="model" required minlength="1" size="10"/>
+            <input type="text" id="model" name="model" v-model="airpalne.model" required minlength="1" size="10"/>
           </div>
           <div>
             <label for="wings">Wings: </label>
-            <input type="text" id="wings" name="wings" required minlength="1" size="5"/>
+            <input type="text" id="wings" name="wings" v-model="airpalne.wings" required minlength="1" size="5"/>
           </div>
           <div>
             <label for="windows">Windows: </label>
-            <input type="text" id="windows" name="windows" required minlength="1" size="5"/>
+            <input type="text" id="windows" name="windows" v-model="airpalne.windows" required minlength="1" size="5"/>
           </div>
           <div>
             <label for="doors">Doors: </label>
-            <input type="text" id="doors" name="doors" required minlength="1" size="5"/>
+            <input type="text" id="doors" name="doors" v-model="airpalne.doors" required minlength="1" size="5"/>
           </div>
           <div>
             <label for="floors">Floors: </label>
-            <input type="text" id="floors" name="floors" required minlength="1" size="5"/>
+            <input type="text" id="floors" name="floors" v-model="airpalne.floors" required minlength="1" size="5"/>
           </div>
           <div>
             <label for="places">Places: </label>
-            <input type="text" id="places" name="places" required minlength="1" size="5"/>
+            <input type="text" id="places" name="places" v-model="airpalne.places" required minlength="1" size="5"/>
           </div>
 
         </div>
@@ -63,13 +63,14 @@
         <div>
           <div>
             <label for="destanation">Destanation: </label>
-            <input type="text" id="destanation" name="destanation" required minlength="1" size="10"/>
+            <input type="text" id="destanation" name="destanation" v-model="airpalne.destanation" required minlength="1"
+                   size="10"/>
           </div>
 
           <div>
-            <form>
+            <form style="width: 200px">
               <label for="airplane">Airplane: </label>
-              <output name="airplane" id="airplane"></output>
+              <output name="airplane" id="airplane" class="text">{{ airpalne.build() }}</output>
             </form>
           </div>
 
@@ -83,6 +84,7 @@
 import {BusinessClass} from "@/Model/BusinessClass.js";
 import {ComfortClass} from "@/Model/ComfortClass.js";
 import {EconomClass} from "@/Model/EconomClass.js";
+import {BuilderAirplane} from '@/Model/BuilderAirplane.js';
 import {reactive} from "vue";
 
 const business = new BusinessClass(1000);
@@ -91,15 +93,27 @@ const econom = new EconomClass(300);
 
 
 const placesType = reactive({
-      placesType: {
-        selectedAirplane: 'business',
-        amount: 1200,
-        buy: ''
+  placesType: {
+    selectedAirplane: 'business',
+    amount: 1200,
+    buy: ''
   }
 })
 
+const airpalne = reactive({
+  airplane: {
+    model: '',
+    wings: 0,
+    windows: 0,
+    doors: 0,
+    floors: 0,
+    places: 0,
+    selectedAirplane: 'business',
+    destanation: ''
+  }
+})
 
-placesType.calculatePayment = function() {
+placesType.calculatePayment = function () {
   if (this.selectedAirplane === 'business') {
     business.setNext(comfort);
     comfort.setNext(econom);
@@ -113,6 +127,23 @@ placesType.calculatePayment = function() {
   }
 };
 
+
+airpalne.build = function () {
+  let Airplane = new BuilderAirplane(this.model);
+  let a = Airplane.setEngines(4)
+      .setWing(this.wings)
+      .setTail(1)
+      .setFuselage(1)
+      .setChassis(4)
+      .setWindows(this.windows)
+      .setDoors(this.doors)
+      .setFloors(this.doors)
+      .Places()
+      .addClass(this.selectedAirplane)
+      .setDestanation(this.destanation)
+      .build();
+  return a;
+}
 
 </script>
 
@@ -128,13 +159,8 @@ input {
 }
 
 fieldset {
-  width: 700px;
-  height: 250px;
-}
-
-.block {
-  display: inline-block;
-  margin: 2px;
+  width: 1000px;
+  height: 500px;
 }
 
 .wrapper {
